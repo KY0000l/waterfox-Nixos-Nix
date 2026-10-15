@@ -55,6 +55,7 @@ stdenv.mkDerivation rec {
   # Make dlopen()ed libraries (audio, VA-API, GL) findable at runtime
   preFixup = ''
     gappsWrapperArgs+=(
+      --set MOZ_LEGACY_PROFILES 1
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [
         libpulseaudio
         pipewire
