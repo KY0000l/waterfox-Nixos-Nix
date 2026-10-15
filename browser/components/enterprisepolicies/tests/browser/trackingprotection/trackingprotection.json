@@ -1,7 +1,0 @@
-{
-  "policies": {
-    "EnableTrackingProtection": {
-      "Category": "strict"
-    }
-  }
-}

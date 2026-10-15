@@ -1,5 +1,0 @@
-[Runtime]
-name=${FLATPAK_NAME}.Locale
-
-[ExtensionOf]
-ref=app/${FLATPAK_NAME}/${ARCH_NAME}/${FLATPAK_BRANCH}

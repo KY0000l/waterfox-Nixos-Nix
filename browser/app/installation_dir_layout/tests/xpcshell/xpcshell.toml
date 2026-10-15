@@ -1,6 +1,0 @@
-[DEFAULT]
-run-if = [
-  "os != 'android'",
-]
-
-["installation_dir_layout_test.js"]
