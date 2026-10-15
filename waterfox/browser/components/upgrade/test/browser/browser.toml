@@ -1,4 +1,0 @@
-[DEFAULT]
-tags = "waterfox_upgrade"
-
-["browser_browserGlue_upgradeDialog_trigger.js"]

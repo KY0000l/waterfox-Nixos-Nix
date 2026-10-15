@@ -1,6 +1,0 @@
-[DEFAULT]
-tags = "waterfox_urlbar"
-
-["browser_doubleClickSelectsAll.js"]
-
-["browser_trustPanel_breachAlerts_disabled.js"]

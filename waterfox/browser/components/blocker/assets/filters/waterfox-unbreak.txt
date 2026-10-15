@@ -1,1 +1,0 @@
-@@|https://securej.chase.com/__imp_apg__/api/dip/v1/dip|$xmlhttprequest,domain=chase.com
