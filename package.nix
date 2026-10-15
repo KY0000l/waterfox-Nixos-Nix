@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchurl, autoPatchelfHook, wrapGAppsHook3, makeDesktopItem, copyDesktopItems
+{ lib, stdenv, fetchurl, autoPatchelfHook, patchelfUnstable, wrapGAppsHook3
+, makeDesktopItem, copyDesktopItems
 , alsa-lib, gtk3, dbus-glib, nss, nspr, libpulseaudio, libva, libGL, pciutils
 , libX11, libXt, libXtst, libXcomposite, libXdamage, libXrandr, libXcursor, libXi
 , adwaita-icon-theme
@@ -13,14 +14,23 @@ stdenv.mkDerivation rec {
     hash = "sha256-kxY7aDUaWKTWZFchm5Xvhv5wZqZSTYG7bKvXR956kFY=";
   };
 
-  nativeBuildInputs = [ autoPatchelfHook wrapGAppsHook3 copyDesktopItems ];
+  nativeBuildInputs = [
+    autoPatchelfHook
+    patchelfUnstable
+    wrapGAppsHook3
+    copyDesktopItems
+  ];
 
   buildInputs = [
     alsa-lib gtk3 dbus-glib nss nspr adwaita-icon-theme
     libX11 libXt libXtst libXcomposite libXdamage libXrandr libXcursor libXi
   ];
 
+  # Loaded at runtime via dlopen, so autoPatchelf can't see them
   runtimeDependencies = [ libpulseaudio libva libGL pciutils ];
+
+  # Mozilla's relrhack breaks if patchelf moves ELF sections around
+  patchelfFlags = [ "--no-clobber-old-sections" ];
 
   dontConfigure = true;
   dontBuild = true;
@@ -28,9 +38,16 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     runHook preInstall
-    mkdir -p $out/bin $out/lib/waterfox
+
+    mkdir -p $out/bin $out/lib/waterfox $out/share/icons/hicolor/128x128/apps
     cp -r . $out/lib/waterfox
     ln -s $out/lib/waterfox/waterfox $out/bin/waterfox
+
+    icon=$out/lib/waterfox/browser/chrome/icons/default/default128.png
+    if [ -f "$icon" ]; then
+      ln -s "$icon" $out/share/icons/hicolor/128x128/apps/waterfox.png
+    fi
+
     runHook postInstall
   '';
 
