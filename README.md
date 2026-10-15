@@ -1,5 +1,7 @@
 # Waterfox for Nix
 
+Note: This project is not fully tested and my have nix specific quirks. Not all functionality is guaranteed.
+
 A small Nix flake that packages the official prebuilt [Waterfox](https://www.waterfox.net/) binary release for NixOS. It does not contain the browser source code. It downloads the release tarball from Waterfox's CDN when you build.
 
 - **Platform:** `x86_64-linux`
