@@ -1,6 +1,7 @@
 { lib, stdenv, fetchurl, autoPatchelfHook, patchelfUnstable, wrapGAppsHook3
 , makeDesktopItem, copyDesktopItems
 , alsa-lib, gtk3, dbus-glib, nss, nspr, libpulseaudio, libva, libGL, pciutils
+, pipewire, ffmpeg
 , libX11, libXt, libXtst, libXcomposite, libXdamage, libXrandr, libXcursor, libXi
 , adwaita-icon-theme
 }:
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
   ];
 
   # Loaded at runtime via dlopen, so autoPatchelf can't see them
-  runtimeDependencies = [ libpulseaudio libva libGL pciutils ];
+  runtimeDependencies = [ libpulseaudio pipewire libva libGL pciutils ffmpeg ];
 
   # Mozilla's relrhack breaks if patchelf moves ELF sections around
   patchelfFlags = [ "--no-clobber-old-sections" ];
@@ -49,6 +50,21 @@ stdenv.mkDerivation rec {
     fi
 
     runHook postInstall
+  '';
+
+  # Make dlopen()ed libraries (audio, VA-API, GL) findable at runtime
+  preFixup = ''
+    gappsWrapperArgs+=(
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [
+        libpulseaudio
+        pipewire
+        alsa-lib
+        libva
+        libGL
+        pciutils
+        ffmpeg
+      ]}"
+    )
   '';
 
   desktopItems = [
