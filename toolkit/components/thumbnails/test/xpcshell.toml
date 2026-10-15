@@ -1,7 +1,0 @@
-[DEFAULT]
-head = ""
-
-["test_thumbnails_interfaces.js"]
-run-if = [
-  "os != 'android'", # xpcom interface not packaged
-]

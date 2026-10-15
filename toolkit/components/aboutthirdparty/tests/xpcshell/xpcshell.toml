@@ -1,7 +1,0 @@
-[DEFAULT]
-run-if = [
-  "os != 'android'",
-]
-head = "head.js"
-
-["test_aboutthirdparty.js"]
