@@ -24,6 +24,7 @@ stdenv.mkDerivation rec {
 
   dontConfigure = true;
   dontBuild = true;
+  dontStrip = true;
 
   installPhase = ''
     runHook preInstall
