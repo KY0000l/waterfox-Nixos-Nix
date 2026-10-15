@@ -1,7 +1,0 @@
-[DEFAULT]
-run-if = [
-  "os != 'android'",
-]
-head = ""
-
-["test_componentsRegistered.js"]
