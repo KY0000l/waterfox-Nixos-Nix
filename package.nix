@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cdn.waterfox.com/waterfox/releases/${version}/Linux_x86_64/waterfox-${version}.tar.bz2";
-    hash = lib.fakeHash;
+    hash = "sha256-kxY7aDUaWKTWZFchm5Xvhv5wZqZSTYG7bKvXR956kFY=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook wrapGAppsHook3 copyDesktopItems ];
