@@ -1,3 +1,0 @@
-[DEFAULT]
-
-["include:non-existent.toml"]
