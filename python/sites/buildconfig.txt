@@ -1,2 +1,0 @@
-requires-python:>=3.9
-vendored:third_party/python/pyyaml/lib/

@@ -1,2 +1,0 @@
-requires-python:>=3.9
-pypi:pywatchman==2.0

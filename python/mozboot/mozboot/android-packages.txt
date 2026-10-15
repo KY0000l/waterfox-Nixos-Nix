@@ -1,4 +1,0 @@
-emulator
-platform-tools
-build-tools;37.0.0
-platforms;android-37.0

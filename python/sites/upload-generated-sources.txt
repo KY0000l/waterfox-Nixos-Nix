@@ -1,2 +1,0 @@
-requires-python:>=3.10
-pypi:boto3==1.38.38
