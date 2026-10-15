@@ -1,9 +1,0 @@
-[DEFAULT]
-prefs = [
-  "security.integrity_policy.stylesheet.enabled=true",
-]
-
-["test_console_messages.html"]
-support-files = [
-  "file_console_messages.sjs"
-]
