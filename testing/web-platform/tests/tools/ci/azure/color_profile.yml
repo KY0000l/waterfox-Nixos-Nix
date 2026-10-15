@@ -1,5 +1,0 @@
-steps:
-- script: |
-    ./wpt macos-display-configuration
-  displayName: 'Reconfigure the display(s)'
-  condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'))
