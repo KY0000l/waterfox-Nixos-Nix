@@ -1,9 +1,0 @@
-{
-    "configure-args": "--enable-simulator=riscv64",
-    "optimize": true,
-    "debug": true,
-    "extra-args": {
-        "jit-test": ["--jitflags=debug"]
-    },
-    "bits": 64
-}
