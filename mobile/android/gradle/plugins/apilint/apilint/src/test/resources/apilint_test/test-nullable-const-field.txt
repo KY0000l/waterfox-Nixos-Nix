@@ -1,6 +1,0 @@
-package test {
-  public class TestClass {
-    field public static final java.lang.String testField = "const";
-    ctor protected TestClass();
-  }
-}

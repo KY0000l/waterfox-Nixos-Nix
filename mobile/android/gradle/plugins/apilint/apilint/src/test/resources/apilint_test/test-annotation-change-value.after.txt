@@ -1,5 +1,0 @@
-package test {
-  public class TestClass {
-    method @A @B @C @D(argument="xxx", other="yyy") @E @F(arg="bbb") @G void testMethod();
-  }
-}

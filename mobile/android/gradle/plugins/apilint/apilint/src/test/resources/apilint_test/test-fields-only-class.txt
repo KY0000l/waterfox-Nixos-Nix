@@ -1,7 +1,0 @@
-package test {
-  public class TestFieldsOnly {
-    field public final int testField0;
-    field public final int testField1;
-    field public final int testField2;
-  }
-}

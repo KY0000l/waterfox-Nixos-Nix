@@ -1,6 +1,0 @@
-package test {
-  public abstract static class Test.TestClass implements test.TestClass {
-    public void testGoodMethod(Settings);
-  }
-}
-

@@ -1,6 +1,0 @@
-package test {
-  public abstract static class Test.TestClass extends not_allowed.TestA implements test.TestClass {
-    public void testGoodMethod(Settings);
-  }
-}
-

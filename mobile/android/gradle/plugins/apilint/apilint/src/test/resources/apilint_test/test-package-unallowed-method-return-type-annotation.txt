@@ -1,6 +1,0 @@
-package test {
-  public class TestClass {
-    method public @android.support.annotation.MainThread @not_allowed.Annotation void testMethod();
-  }
-}
-
