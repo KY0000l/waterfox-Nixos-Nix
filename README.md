@@ -28,7 +28,7 @@ inputs = {
   nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   waterfox = {
-    url = "github:KY0000l/waterfox";
+    url = "github:KY0000l/waterfox-Nixos-Nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 };
