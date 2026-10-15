@@ -1,23 +1,94 @@
-# Waterfox
+# Waterfox for Nix
 
-Waterfox is a customisable browser based on Mozilla Firefox. This repository contains Mozilla platform code, Waterfox product code, branding, features, packaging, and release files.
+A small Nix flake that packages the official prebuilt [Waterfox](https://www.waterfox.net/) binary release for NixOS. It does not contain the browser source code. It downloads the release tarball from Waterfox's CDN when you build.
 
-## Building
+- **Platform:** `x86_64-linux`
+- **Current version:** 6.7.6
 
-Waterfox uses the Mozilla build system. The usual `./mach` entry points apply:
+## How it works
 
-```sh
-./mach bootstrap
-./mach build
-./mach package
-./mach test --auto
+| File | Purpose |
+|------|---------|
+| `flake.nix` | Exposes the package (`packages.x86_64-linux.waterfox`) and an overlay (`overlays.default`) |
+| `package.nix` | The derivation: fetches the tarball, patches its binaries for NixOS, and adds a desktop entry |
+| `flake.lock` | Pins the exact `nixpkgs` revision used |
+
+The overlay is what lets you write plain `waterfox` in your package lists. It adds a `waterfox` attribute to `pkgs`, just like any package from nixpkgs.
+
+## Installation
+
+### 1. Add the flake input
+
+In your system's `flake.nix`:
+
+```nix
+inputs = {
+  nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+  waterfox = {
+    url = "github:KY0000l/waterfox";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+};
 ```
 
-## Contributing
+The `follows` line makes Waterfox use your `nixpkgs` instead of pulling in a second copy.
 
-Most Firefox development documentation still applies to this tree. Use the Firefox Source Docs for the shared Mozilla build system, testing tools, and platform code.
+### 2. Enable the overlay
 
-## Resources
+Inside `outputs`, make sure your inputs are in scope (`inputs@{ ... }`) and add the overlay to your system modules:
 
-- [Waterfox website](https://www.waterfox.net/)
-- [Firefox Source Docs](https://firefox-source-docs.mozilla.org/)
+```nix
+nixpkgs.overlays = [
+  inputs.waterfox.overlays.default
+];
+```
+
+### 3. Add the package
+
+In `configuration.nix`:
+
+```nix
+environment.systemPackages = with pkgs; [
+  waterfox
+];
+```
+
+Or, with Home Manager:
+
+```nix
+home.packages = [ pkgs.waterfox ];
+```
+
+Then rebuild:
+
+```sh
+sudo nixos-rebuild switch --flake .#yourhostname
+```
+
+## Try it without installing
+
+```sh
+nix run github:KY0000l/waterfox
+```
+
+## Updating
+
+Pull in a new version of this flake (and any packaging fixes):
+
+```sh
+nix flake update waterfox
+```
+
+When Waterfox releases a new version, a maintainer needs to bump `version` and `hash` in `package.nix`. Get the new hash with:
+
+```sh
+nix-prefetch-url --type sha256 \
+  https://cdn.waterfox.com/waterfox/releases/<version>/Linux_x86_64/waterfox-<version>.tar.bz2 \
+  | xargs nix hash to-sri --type sha256
+```
+
+## Notes
+
+- Waterfox is distributed under its own license. This repo only packages the official binaries and is not affiliated with Waterfox.
+- Only `x86_64-linux` is supported, matching the upstream tarball.
