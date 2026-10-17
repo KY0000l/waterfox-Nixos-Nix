@@ -43,7 +43,7 @@ inputs = {
 
 The `follows` line makes Waterfox use your `nixpkgs` instead of pulling in a second copy.
 
-### 2. Option A: use the NixOS module (recommended)
+### 2. Use the NixOS module (recommended)
 
 Add the module to your system and enable it. Make sure your inputs are in scope (`inputs@{ ... }`):
 
@@ -131,57 +131,8 @@ Pull in a new version of this flake (and any packaging fixes):
 nix flake update waterfox
 ```
 
-When Waterfox releases a new version, a maintainer needs to bump `version` and `hash` in `package.nix`. Get the new hash with:
-
-```sh
-nix-prefetch-url --type sha256 \
-  https://cdn.waterfox.com/waterfox/releases/<version>/Linux_x86_64/waterfox-<version>.tar.bz2 \
-  | xargs nix hash to-sri --type sha256
-```
-
-## Troubleshooting
-
-**Waterfox crashes immediately (segfault).**
-Usually a patching problem. Run `coredumpctl gdb -1` and check the backtrace. A crash in `_dl_init` points to the `relrhack` issue described above. Make sure `patchelfUnstable` and `patchelfFlags = [ "--no-clobber-old-sections" ]` are still in `package.nix`.
-
-**No sound / `about:support` shows Audio Backend: `alsa`.**
-Waterfox couldn't load PulseAudio. Your system needs PipeWire's PulseAudio layer:
-
-```nix
-services.pipewire = {
-  enable = true;
-  pulse.enable = true;
-  alsa.enable = true;
-};
-```
-
-Check that `pactl info` works in a terminal. After a rebuild, Audio Backend should show `pulse` or `pulse-rust`.
-
-**DRM content (Spotify, Netflix) doesn't play.**
-Widevine is downloaded by Waterfox into your profile on first use. In `about:addons` → Plugins, confirm "Widevine Content Decryption Module" is listed, and that **Play DRM-controlled content** is ticked in `about:preferences`. If the video plays but has no sound, it's the audio backend issue above.
-
-**My bookmarks and logins disappeared after a rebuild.**
-Your data isn't deleted. Firefox-based browsers tie the default profile to the install path, and the store path changes on rebuild. Open `about:profiles`, find your old profile, and click **Set as default profile**. Or launch it directly:
-
-```sh
-waterfox --profile ~/.waterfox/<old-profile-dir>
-```
-
-The wrapper sets `MOZ_LEGACY_PROFILES=1` to prevent this. It hasn't been verified against every Waterfox release, so back up your profile (`cp -r ~/.waterfox ~/.waterfox.bak`) before major updates.
-
-**KDE integration extension doesn't connect (overlay-only setup).**
-Install `kdePackages.plasma-browser-integration` and create the symlink manually:
-
-```sh
-mkdir -p ~/.mozilla/native-messaging-hosts
-ln -s /run/current-system/sw/lib/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json \
-  ~/.mozilla/native-messaging-hosts/
-```
-
-Note that `environment.pathsToLink = [ "/lib/mozilla/native-messaging-hosts" ]` was not enough on its own in testing, which is why the module creates the symlink.
-
 ## Notes
 
 - Waterfox is distributed under its own license. This repo only packages the official binaries and is not affiliated with Waterfox.
 - Only `x86_64-linux` is supported, matching the upstream tarball.
-- The NixOS module and Plasma integration are lightly tested. If `systemd.user.tmpfiles` isn't available on your nixpkgs revision, use the manual symlink above.
+- The NixOS module and Plasma integration are nearly untested.
