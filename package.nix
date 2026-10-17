@@ -56,6 +56,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     gappsWrapperArgs+=(
       --set MOZ_LEGACY_PROFILES 1
+      --set MOZ_SYSTEM_DIR "/run/current-system/sw/lib/mozilla"
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [
         libpulseaudio
         pipewire
