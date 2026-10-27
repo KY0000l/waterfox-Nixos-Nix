@@ -8,7 +8,7 @@
 
 stdenv.mkDerivation rec {
   pname = "waterfox";
-  version = "6.7.6";
+  version = "6.7.7";
 
   src = fetchurl {
     url = "https://cdn.waterfox.com/waterfox/releases/${version}/Linux_x86_64/waterfox-${version}.tar.bz2";
