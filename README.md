@@ -5,7 +5,7 @@
 A small Nix flake that packages the official prebuilt [Waterfox](https://www.waterfox.net/) binary release for NixOS. It does not contain the browser source code. It downloads the release tarball from Waterfox's CDN when you build.
 
 - **Platform:** `x86_64-linux`
-- **Current version:** 6.7.6
+- **Current version:** 6.7.7
 
 ## How it works
 
