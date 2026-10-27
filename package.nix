@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cdn.waterfox.com/waterfox/releases/${version}/Linux_x86_64/waterfox-${version}.tar.bz2";
-    hash = "sha256-kxY7aDUaWKTWZFchm5Xvhv5wZqZSTYG7bKvXR956kFY=";
+    hash = "sha256-8KHGIAEU2lMJi78twSc60dnuvg2s5MLtM7eFsZlzLWA=";
   };
 
   nativeBuildInputs = [
