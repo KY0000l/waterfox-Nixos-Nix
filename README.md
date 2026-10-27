@@ -109,7 +109,7 @@ Or with Home Manager:
 home.packages = [ pkgs.waterfox ];
 ```
 
-With this option you handle the Plasma integration yourself (see [Troubleshooting](#troubleshooting)).
+With this option you handle the Plasma integration yourself.
 
 ### 3. Rebuild
 
