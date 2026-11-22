@@ -8,11 +8,11 @@
 
 stdenv.mkDerivation rec {
   pname = "waterfox";
-  version = "6.7.8";
+  version = "6.7.9";
 
   src = fetchurl {
     url = "https://cdn.waterfox.com/waterfox/releases/${version}/Linux_x86_64/waterfox-${version}.tar.bz2";
-    hash = "sha256-Kbi8wCZf3qfc8EccbvjilvSMppc+A5udGBqT57ZU7xU=";
+    hash = "sha256-tSjMpelqLZZ2sCEnfBy2MvnhDb+ifoRYZieHVODIxbY=";
   };
 
   nativeBuildInputs = [
